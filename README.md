@@ -76,8 +76,12 @@ curl --location 'http://localhost:6000/api/v1/functions/execute' \
     "method": "footest.wasm",
     "parameters": null,
     "config": {
+        "permissions":["https://api.coingecko.com"],
         "env_vars": [
-            {}
+            {
+                "name": "BLS_REQUEST_PATH",
+                "value": "/api"
+            }
         ],
         "number_of_nodes": 1,
         "result_aggregation": {
