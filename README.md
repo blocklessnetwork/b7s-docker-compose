@@ -1,7 +1,7 @@
 # b7s-docker-compose
 quickly start a cluster using compose
 
-
+Get docker https://www.docker.com/
 
 ```bash
 PLATFORM=linux ARCH=amd64 NUM_HEADS=5 NUM_WORKERS=10 ./identities.sh # PLATFORM=darwin ARCH=arm64 NUM_HEADS=5 NUM_WORKERS=10 ./identities.s
