@@ -12,8 +12,8 @@ docker compose up
 Do it all with one line, make sure you change the platform, arch, num heads, and num workers to desired.
 
 * By default exposes port 6000 + 1 for each head node RPC
-* Binds 172.0.0.10 + 1 for workers and
-* Binds 172.0.0.100 + 1 for head nodes
+* Binds 172.19.0.10 + 1 for workers and
+* Binds 172.19.0.100 + 1 for head nodes
 * Terminates at Head1 - Localized / On Prem
 
 Mac M1/M2
