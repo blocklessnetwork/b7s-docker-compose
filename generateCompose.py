@@ -15,20 +15,20 @@ networks:
       config:
         - subnet: 172.19.0.0/24
 """
+
 worker_section_template = """
   {worker}:
     # {worker_id}
-    command: sh -c "sleep 0 && /app/node
-      --log-level debug
-      --role worker
-      --private-key /var/keys/priv.bin
-      --port {port}
-      --peer-db pdb
-      --function-db fdb
-      --workspace workspace
-      --runtime /app/runtime
-      --boot-nodes '{boot_nodes}'"
-    image: ghcr.io/blocklessnetwork/b7s:v0.0.23.1
+    environment:
+      - LOG_LEVEL=debug
+      - NODE_ROLE=worker
+      - NODE_KEY_PATH=/var/keys/priv.bin
+      - PEER_DB=pdb
+      - FUNCTION_DB=fdb
+      - WORKSPACE=workspace
+      - RUNTIME=/app/runtime
+      - BOOT_NODES={boot_nodes}
+    image: ghcr.io/blocklessnetwork/b7s:v0.3.0
     volumes:
       - type: bind
         source: ./keys/{worker}/
@@ -43,21 +43,20 @@ worker_section_template = """
         ipv4_address: {ip_address}
 """
 
-
 head_section_template = """
   {head}:
     # {head_id}
-    command: sh -c "sleep 0 && /app/node
-      --log-level debug
-      --role head
-      --private-key /var/keys/priv.bin
-      --port {port}
-      --peer-db pdb
-      --function-db fdb
-      --workspace workspace
-      --rest-api ':{rest_port}'
-      --boot-nodes '{boot_nodes}'"
-    image: ghcr.io/blocklessnetwork/b7s:v0.0.23.1
+    environment:
+      - LOG_LEVEL=debug
+      - NODE_ROLE=head
+      - NODE_KEY_PATH=/var/keys/priv.bin
+      - PEER_DB=pdb
+      - FUNCTION_DB=fdb
+      - WORKSPACE=workspace
+      - REST_API={rest_port}
+      - P2P_PORT={port}
+      # - BOOT_NODES='{boot_nodes}'
+    image: ghcr.io/blocklessnetwork/b7s:v0.3.0
     ports:
       - "{rest_port}:{rest_port}"
     volumes:
@@ -74,10 +73,11 @@ head_section_template = """
         ipv4_address: {ip_address}
 """
 
+
 def generate_boot_nodes(peers, prefix):
     boot_nodes = []
     for i, peer in enumerate(peers):
-        boot_nodes.append(f'"/ip4/172.19.0.{10 + i}/tcp/{9010 + i}/p2p/{peer}"')
+        boot_nodes.append(f'/ip4/172.19.0.{100 + i}/tcp/{9010 + i}/p2p/{peer}')
     return ",".join(boot_nodes)
 
 workers = []
