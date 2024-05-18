@@ -28,7 +28,7 @@ worker_section_template = """
       - WORKSPACE=workspace
       - RUNTIME=/app/runtime
       - BOOT_NODES={boot_nodes}
-    image: ghcr.io/blocklessnetwork/b7s:v0.3.0
+    image: ghcr.io/blocklessnetwork/b7s:v0.6.2
     volumes:
       - type: bind
         source: ./keys/{worker}/
@@ -56,7 +56,7 @@ head_section_template = """
       - REST_API={rest_port}
       - P2P_PORT={port}
       # - BOOT_NODES='{boot_nodes}'
-    image: ghcr.io/blocklessnetwork/b7s:v0.3.0
+    image: ghcr.io/blocklessnetwork/b7s:v0.6.2
     ports:
       - "{rest_port}:{rest_port}"
     volumes:
